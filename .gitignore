@@ -1,1 +1,42 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Python Installer logs
+pip-log.txt
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Virtual environment
+venv/
+env/
+.venv/
+.venv3/
+
+# Environments
 .env
+
+# IDE settings
+.idea/
+.vscode/
+
+# Compiled Python files
+*.pyc
+*.pyo
+*.pyd
+
+# macOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
