@@ -17,7 +17,6 @@ Providers support:
 
 ### Todo:
 
-* Make simultaneously file process.
 * Make multiple provider
   * Local process
   * Azure bucket
