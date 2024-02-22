@@ -5,14 +5,12 @@ A project to help developers fix disasters or simply reduce space and optimise f
 Providers support: 
 * AWS S3
 
-### Local use
+### Local use S3 bucket optimization
 
 1. Clone repository.
-2. Copy `.env.example` and paste, rename to `.env`.
-3. Change env values to your own.
 4. Install dependencies.
-5. In main.py you should change the bucket name
-6. And run with `python3 src/main.py`
+5. And run with `python3 src/main.py`
+6. The CLI will ask you for your aws credentials and bucket name
 
 
 ### Todo:

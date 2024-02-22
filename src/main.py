@@ -1,5 +1,4 @@
 import os
-from dotenv import load_dotenv
 from concurrent.futures import ThreadPoolExecutor, wait, as_completed
 
 from tqdm import tqdm
@@ -9,8 +8,6 @@ from application.images.remove import RemoveImageUseCase
 from application.images.list_all_objects import ListAllObjectsUseCase
 from infrastructure.compress_images import compress_image, remove_output_files
 from infrastructure.repositories.s3_repository import S3Repository
-
-load_dotenv()
 
 
 def process_image(key, aws_bucket_name, compression_quality, output_image_path, upload_image_use_case, download_image_use_case, remove_image_use_case):
@@ -36,12 +33,22 @@ def process_image(key, aws_bucket_name, compression_quality, output_image_path, 
         download_image_use_case.remove_downloaded_object(path=local_path)
         print(f"Removed downloaded object for {key}")
 
-def main():
-    aws_access_key = os.getenv('AWS_ACCESS_KEY_ID')
-    aws_secret_key = os.getenv('AWS_SECRET_ACCESS_KEY')
-    aws_bucket_name = "test-file-optimization"
+def display_welcome_message():
+    print("CLI application developed by G33N for file optimisation !")
+    print("---------------------------------------------------------")
 
-    compression_quality = os.getenv('COMPRESSION_QUALITY')
+def get_input(message):
+    key = input(message+": ")
+    return key
+
+
+def main():
+    display_welcome_message()
+
+    aws_access_key = get_input("Enter your AWS_ACCESS_KEY_ID")
+    aws_secret_key = get_input("Enter your AWS_SECRET_ACCESS_KEY")
+    aws_bucket_name = get_input("Enter your AWS_BUCKET_NAME")
+    compression_quality = get_input("Enter your COMPRESSION_QUALITY from 0 to 100")
 
     output_image_path = "output/"
     repository = S3Repository(aws_access_key, aws_secret_key)

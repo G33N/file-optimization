@@ -1,5 +1,5 @@
 import boto3
-from botocore.exceptions import NoCredentialsError
+from botocore.exceptions import NoCredentialsError, ClientError
 
 class S3Repository:
     _instance = None
@@ -36,6 +36,9 @@ class S3Repository:
             for obj in response:
                 keys.append(obj.key)
             return keys
+        except ClientError: 
+            print("Invalid bucket name")
+            return []
         except NoCredentialsError:
             print("Credentials not available or incorrect.")
             return []
