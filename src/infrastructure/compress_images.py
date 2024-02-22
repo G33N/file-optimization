@@ -25,7 +25,30 @@ def transform_to_format(input_path, output_path, format):
     except Exception as e:
         print(f"Error transforming image to {format}: {e}")
 
-def clean_tmp_files():
+import os
+
+def split_aws_key(key):
+    """
+    Splits the AWS key into UUID and extension.
+
+    Parameters:
+    - key (str): AWS key.
+
+    Returns:
+    - uuid (str): UUID of the key.
+    - extension (str): Extension of the key.
+    """
+    try:
+        filename, _ = os.path.splitext(key)
+        uuid = filename.split('/')[-1]
+        extension = os.path.splitext(key)[1]
+        
+        return uuid, extension
+    
+    except Exception as e:
+        print(f"Error splitting AWS key: {e}")
+
+def clean_tmp_files(file):
     """
     Cleans temporary files created during the process.
 
@@ -36,12 +59,8 @@ def clean_tmp_files():
     - None
     """
     try:
-        if os.path.exists('input/tmp.jpg'):
-            os.remove('input/tmp.jpg')
-        if os.path.exists('input/tmp.png'):
-            os.remove('input/tmp.png')
-        if os.path.exists('input/tmp.webp'):
-            os.remove('input/tmp.webp')
+        if os.path.exists(file):
+            os.remove(file)
         print("Temporary files cleaned successfully")
     except Exception as e:
         print(f"Error trying to remove: {e}")
@@ -63,7 +82,7 @@ def remove_output_files(output_path):
     except Exception as e:
         print(f"Error trying to remove: {e}")
 
-def compress_image(input_path, output_path, quality= 85, format="JPEG"):
+def compress_image(key,input_path, output_path, quality= 85, format="JPEG"):
     """
     Compresses an image.
 
@@ -78,8 +97,10 @@ def compress_image(input_path, output_path, quality= 85, format="JPEG"):
     try:
         img = Image.open(input_path)
         if img.format != "WEBP":
-            img = Image.open(transform_to_format(input_path, 'input/tmp.'+format.lower(), format))
-            clean_tmp_files()
+            uuid, extension = split_aws_key(key)
+
+            img = Image.open(transform_to_format(input_path, 'input/tmp-'+uuid+'.'+format.lower(), format))
+            clean_tmp_files(file='input/tmp-'+uuid+'.'+format.lower())
 
         file_name, _ = os.path.splitext(os.path.basename(input_path))
         output_formated_path = os.path.splitext(output_path)[0] + file_name + '.' + format.lower()
