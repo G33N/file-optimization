@@ -13,7 +13,7 @@ load_dotenv()
 def main():
     aws_access_key = os.getenv('AWS_ACCESS_KEY_ID')
     aws_secret_key = os.getenv('AWS_SECRET_ACCESS_KEY')
-    aws_bucket_name = "BucketName"
+    aws_bucket_name = "spacepal-files-prd"
 
     compression_quality = os.getenv('COMPRESSION_QUALITY')
 
@@ -29,7 +29,7 @@ def main():
 
     filtered_keys = [key for key in keys_to_download if not key.lower().endswith(".webp")]
 
-    for key in tqdm(filtered_keys, desc="Processing s3 files", unit="image"):
+    for key in tqdm(filtered_keys, desc="Processing files", unit="image"):
         
         local_path = f"download/{key}"
         bucket_name = aws_bucket_name
