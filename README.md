@@ -13,6 +13,13 @@ Providers support:
 6. The CLI will ask you for your aws credentials and bucket name
 
 
+### Tips 
+
+You can check the S3 bucket size before and after execute with 
+
+`aws s3 ls s3://bucket-name --recursive --human-readable --summarize`
+
+
 ### Todo:
 
 * Make multiple provider
@@ -20,7 +27,6 @@ Providers support:
   * Azure bucket
   * Google storage
   *  etc
-*  Think a safy way to pass credentials
 * Add more files formats.
   * PDF
 * Find duplicates

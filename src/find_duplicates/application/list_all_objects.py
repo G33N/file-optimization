@@ -1,4 +1,4 @@
-from infrastructure.repositories.s3_repository import S3Repository
+from shared.infrastructure.s3_repository import S3Repository
 
 class ListAllObjectsUseCase:
     def __init__(self, file_repository):

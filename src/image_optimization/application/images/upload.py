@@ -1,5 +1,5 @@
 from domain.images import Image
-from infrastructure.repositories.s3_repository import S3Repository
+from shared.infrastructure.s3_repository import S3Repository
 
 class UploadImageUseCase:
     def __init__(self, file_repository):

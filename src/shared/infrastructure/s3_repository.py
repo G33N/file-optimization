@@ -20,6 +20,12 @@ class S3Repository:
         self.s3 = boto3.client('s3', aws_access_key_id=self.access_key, aws_secret_access_key=self.secret_key)
         self.s3_resource = boto3.Session(aws_access_key_id=self.access_key, aws_secret_access_key=self.secret_key).resource('s3')
 
+    def get_head_object(self, bucket_name, resourceKey):
+        s3_resp = self.s3.head_object(Bucket=bucket_name, Key=resourceKey)
+
+        return s3_resp
+
+
     def read_all_objects(self, bucket_name):
         """
         Reads all object keys in the specified S3 bucket.
