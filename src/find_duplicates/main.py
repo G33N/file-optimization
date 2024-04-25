@@ -6,10 +6,16 @@ from shared.infrastructure.s3_repository import S3Repository
 from find_duplicates.application.list_all_objects import ListAllObjectsUseCase
 from find_duplicates.application.get_objects_etag import GetObjectsEtagUseCase
 from find_duplicates.application.find_duplicate_files import FindDuplicateFilesUseCase
+from find_duplicates.application.remove_objects import RemoveObjectsUseCase
 
 
 def display_welcome_message():
     print("CLI application developed by G33N for find and remove duplicates!")
+    print("-----------------------------------------------------------------")
+
+def display_options():
+    print("-----------------------------------------------------------------")
+    print("Do you want to find and remove duplicates from your S3 bucket?")
     print("-----------------------------------------------------------------")
 
 def get_input(message):
@@ -29,6 +35,7 @@ def main():
     list_all_objects = ListAllObjectsUseCase(repository)
     get_objects_etag_use_case = GetObjectsEtagUseCase(repository)
     find_duplicate_files_use_case = FindDuplicateFilesUseCase(repository)
+    remove_objects_use_case = RemoveObjectsUseCase(repository)
 
 
     keys_to_analice = list_all_objects.execute(bucket_name=aws_bucket_name)
@@ -38,6 +45,15 @@ def main():
     duplicateFiles = find_duplicate_files_use_case.execute(resources=etags)
     
     print(f"Duplicate files found: {duplicateFiles}")
+
+    display_options()
+
+    user_input = input("Enter (Y/N): ")
+
+    if user_input.upper() == "Y":
+        remove_objects_use_case.execute(bucket_name=aws_bucket_name, resourcesKey=duplicateFiles)
+    else:
+        return
 
 if __name__ == "__main__":
     main()

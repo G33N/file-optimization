@@ -1,13 +1,15 @@
 import os
+import sys
 from concurrent.futures import ThreadPoolExecutor, wait, as_completed
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
+from shared.infrastructure.s3_repository import S3Repository
 from tqdm import tqdm
 from application.images.upload import UploadImageUseCase
 from application.images.download import DownloadImageUseCase
 from application.images.remove import RemoveImageUseCase
 from application.images.list_all_objects import ListAllObjectsUseCase
 from infrastructure.compress_images import compress_image, remove_output_files
-from shared.infrastructure.s3_repository import S3Repository
 
 
 def process_image(key, aws_bucket_name, compression_quality, output_image_path, upload_image_use_case, download_image_use_case, remove_image_use_case):

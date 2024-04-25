@@ -18,7 +18,8 @@ class GetObjectsEtagUseCase:
                 try:
                     s3_resp = future.result()
                     etag = s3_resp['ETag'].strip('"')
-                    etag_info.append({'etag': etag, 'resourceKey': resourceKey})
+                    last_modified = s3_resp['LastModified']
+                    etag_info.append({'etag': etag, 'resourceKey': resourceKey, 'lastModified': last_modified})
                 except Exception as e:
                     print(f"Error processing image: {e}")
 
