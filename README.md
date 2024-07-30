@@ -8,7 +8,7 @@ Providers support:
 ### Local use S3 bucket optimization
 
 1. Clone repository.
-4. Install dependencies.
+4. Install dependencies. `pip install -r requirements.txt`
 5. And run with `python3 src/cli_menu.py`
 6. Choose a option: 
    1. Image optimization

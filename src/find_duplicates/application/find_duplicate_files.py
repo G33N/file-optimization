@@ -15,14 +15,12 @@ class FindDuplicateFilesUseCase:
             last_modified = resource.get('lastModified')
 
             if etag in etags:
-                if last_modified > etags[etag]['lastModified']:
-                    duplicate_resource = {
-                        'etag': etag,
-                        'resourceKey': etags[etag]['resourceKey']
-                    }
+                duplicate_resource = {
+                    'etag': etag,
+                    'resourceKey': key
+                }
+                if etags[etag]['resourceKey'] not in [dup['resourceKey'] for dup in duplicates]:
                     duplicates.append(duplicate_resource)
-                else:
-                    etags[etag] = {'resourceKey': key, 'lastModified': last_modified}
             else:
                 etags[etag] = {'resourceKey': key, 'lastModified': last_modified}
 

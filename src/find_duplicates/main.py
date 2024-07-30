@@ -46,6 +46,10 @@ def main():
     
     print(f"Duplicate files found: {duplicateFiles}")
 
+    if len(duplicateFiles) == 0:
+        print("No duplicates found.")
+        return
+    
     display_options()
 
     user_input = input("Enter (Y/N): ")
