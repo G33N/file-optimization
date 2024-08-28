@@ -3,6 +3,7 @@ import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from shared.infrastructure.s3_repository import S3Repository
+from shared.infrastructure.database_repository import DatabaseRepository
 from find_duplicates.application.list_all_objects import ListAllObjectsUseCase
 from find_duplicates.application.get_objects_etag import GetObjectsEtagUseCase
 from find_duplicates.application.find_duplicate_files import FindDuplicateFilesUseCase
@@ -30,11 +31,13 @@ def main():
     aws_secret_key = get_input("Enter your AWS_SECRET_ACCESS_KEY")
     aws_bucket_name = get_input("Enter your AWS_BUCKET_NAME")
 
-    repository = S3Repository(aws_access_key, aws_secret_key)
+    database_repository = DatabaseRepository()
+
+    repository = S3Repository(aws_access_key, aws_secret_key, aws_bucket_name)
 
     list_all_objects = ListAllObjectsUseCase(repository)
     get_objects_etag_use_case = GetObjectsEtagUseCase(repository)
-    find_duplicate_files_use_case = FindDuplicateFilesUseCase(repository)
+    find_duplicate_files_use_case = FindDuplicateFilesUseCase(repository, database_repository)
     remove_objects_use_case = RemoveObjectsUseCase(repository)
 
 

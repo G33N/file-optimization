@@ -8,6 +8,7 @@ from shared.infrastructure.database_repository import DatabaseRepository
 from remove_broken_files.application.find_broken_file_path import FindBrokenFilePathUseCase
 from remove_broken_files.application.remove_broken_file_path import RemoveBrokenFilePathUseCase
 from remove_broken_files.application.check_path_status import CheckPathStatusUseCase
+from remove_broken_files.application.update_image_priority import UpdateImagePriorityUseCase
 
 
 def display_welcome_message():
@@ -31,6 +32,7 @@ def main():
 
     find_broken_file_path_use_case = FindBrokenFilePathUseCase(database_repository)
     remove_broken_file_path_use_case = RemoveBrokenFilePathUseCase(database_repository)
+    update_image_priority = UpdateImagePriorityUseCase(database_repository)
 
     files = find_broken_file_path_use_case.execute()
 
@@ -61,6 +63,7 @@ def main():
 
     if user_input.upper() == "Y":
         remove_broken_file_path_use_case.execute(files=broken_paths)
+        update_image_priority.execute()
     else:
         return
 

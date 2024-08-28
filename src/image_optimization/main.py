@@ -53,7 +53,7 @@ def main():
     compression_quality = get_input("Enter your COMPRESSION_QUALITY from 0 to 100")
 
     output_image_path = "output/"
-    repository = S3Repository(aws_access_key, aws_secret_key)
+    repository = S3Repository(aws_access_key, aws_secret_key, aws_bucket_name)
 
     upload_image_use_case = UploadImageUseCase(repository)
     download_image_use_case = DownloadImageUseCase(repository)

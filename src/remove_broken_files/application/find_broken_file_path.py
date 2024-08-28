@@ -1,5 +1,3 @@
-import os
-from tqdm import tqdm
 from shared.infrastructure.database_repository import DatabaseRepository
 
 class FindBrokenFilePathUseCase:

@@ -1,21 +1,23 @@
+import urllib.parse
 import boto3
 from botocore.exceptions import NoCredentialsError, ClientError
 
 class S3Repository:
     _instance = None
 
-    def __new__(cls, access_key, secret_key):
+    def __new__(cls, access_key, secret_key, aws_bucket_name):
         if not cls._instance:
             cls._instance = super(S3Repository, cls).__new__(cls)
             cls._instance._initialized = False
         return cls._instance
 
-    def __init__(self, access_key, secret_key):
+    def __init__(self, access_key, secret_key, bucket_name):
         if self._initialized:
             return
         self._initialized = True
         self.access_key = access_key
         self.secret_key = secret_key
+        self.bucket_name = bucket_name
 
         self.s3 = boto3.client('s3', aws_access_key_id=self.access_key, aws_secret_access_key=self.secret_key)
         self.s3_resource = boto3.Session(aws_access_key_id=self.access_key, aws_secret_access_key=self.secret_key).resource('s3')
@@ -107,3 +109,10 @@ class S3Repository:
         except NoCredentialsError:
             print("Credentials not available or incorrect.")
             return False
+        
+    def get_object_url(self, bucket_name, resource_key):
+        encoded_url = urllib.parse.quote_plus(f"{resource_key}")
+        return f"https://{bucket_name}.s3.amazonaws.com/{encoded_url}"
+    
+    def get_bucket_name(self):
+        return self.bucket_name

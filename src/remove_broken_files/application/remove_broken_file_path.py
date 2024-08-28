@@ -1,5 +1,3 @@
-from tqdm import tqdm
-from concurrent.futures import ThreadPoolExecutor, wait, as_completed
 from shared.infrastructure.database_repository import DatabaseRepository
 
 class RemoveBrokenFilePathUseCase:
